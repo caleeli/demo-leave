@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "skills": {
+    "pm4-action-by-email": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-action-by-email/SKILL.md",
+      "computedHash": "d5ec9970696c2228fb65943b4ef935f2d7ff9124269559c3e49d5b902b9a35f2"
+    },
+    "pm4-collection": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-collection/SKILL.md",
+      "computedHash": "ff8c1d3d0806575c23f412743095ca7a7d6919802d425b2dd1679a56ee60fd97"
+    },
+    "pm4-data-connector": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-data-connector/SKILL.md",
+      "computedHash": "0e2e868e3643e26515abe229f6004d0e97afae1daade7e1d58e427d6e2a7f4d5"
+    },
+    "pm4-decision-table": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-decision-table/SKILL.md",
+      "computedHash": "ebfa6581d39d3a43331e52e39946c8c37f2066e26e051d3e1fdcf7173774358b"
+    },
+    "pm4-expressions": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-expressions/SKILL.md",
+      "computedHash": "b3326a5eecac819ccbf654a3eaa151a1f940c339b514a5485659962893739bd1"
+    },
+    "pm4-flow-genie": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-flow-genie/SKILL.md",
+      "computedHash": "9cf07e3c167a0780cbcd9b01c45f62aca1dfd16a75142ebefa990369a92648c6"
+    },
+    "pm4-form-manual-task": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-form-manual-task/SKILL.md",
+      "computedHash": "e259a718a64d3012d14e50f9bafe9c4c1a3410dc0e8b2830ae5505d19c212d35"
+    },
+    "pm4-overview": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-overview/SKILL.md",
+      "computedHash": "65dbddb01286ec91a17d0646d24bb19346f4deb56eb121b8ee7b6b5721f3f60e"
+    },
+    "pm4-pm-block": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-pm-block/SKILL.md",
+      "computedHash": "9ff927ac317b28e4bffb9cd393aad8258acee5598b9d008284c7dd70bf50367d"
+    },
+    "pm4-process": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-process/SKILL.md",
+      "computedHash": "dacc9357261ea87ee514e562ddef5e3096cc4fd2358c033f95207da433f1c9d4"
+    },
+    "pm4-process-health": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-process-health/SKILL.md",
+      "computedHash": "2dd34e1477e6e8b90cb708877896aa3e7267f71de3409a2d98c82ee7d6f1a7d0"
+    },
+    "pm4-screen": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-screen/SKILL.md",
+      "computedHash": "bb817e2adcd052fc22737a1ce4d2a4603ee020fd8079135120dc3a1ef614ee75"
+    },
+    "pm4-script": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-script/SKILL.md",
+      "computedHash": "cb9022f6c62fcc5ba26c47de9aff29bf2ad20604dca1deae3b0fdaeb6d3d592f"
+    },
+    "pm4-send-email": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-send-email/SKILL.md",
+      "computedHash": "76189114c785268587d1611dec4bc1047708e818b55439a3c1a21375cc8454d6"
+    },
+    "pm4-signal": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-signal/SKILL.md",
+      "computedHash": "9eabf40f8d97f941fb62b826beaf93176ddf308955e3d27a09aae50e3e5f6a4a"
+    },
+    "pm4-sub-process": {
+      "source": "processmaker/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pm4-sub-process/SKILL.md",
+      "computedHash": "65ba26cc85c64fb9035f8e5f94436155bbf1558689bf149ff841dc0fa32d787d"
+    }
+  }
+}

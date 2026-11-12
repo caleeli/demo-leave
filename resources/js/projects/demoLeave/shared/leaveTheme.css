@@ -1,0 +1,62 @@
+.dlv-shell {
+  --dlv-primary: #4f46e5;
+  --dlv-primary-soft: #eef2ff;
+  --dlv-accent: #06b6d4;
+  --dlv-success: #059669;
+  --dlv-danger: #dc2626;
+  --dlv-warning: #d97706;
+  --dlv-surface: #ffffff;
+  --dlv-muted: #64748b;
+  --dlv-border: #e2e8f0;
+  --dlv-radius: 14px;
+  --dlv-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #0f172a;
+}
+
+.dlv-hero {
+  background: linear-gradient(135deg, var(--dlv-primary) 0%, #7c3aed 55%, var(--dlv-accent) 100%);
+  border-radius: var(--dlv-radius);
+  padding: 1.5rem 1.75rem;
+  color: #fff;
+  box-shadow: var(--dlv-shadow);
+  margin-bottom: 1.25rem;
+}
+
+.dlv-card {
+  background: var(--dlv-surface);
+  border: 1px solid var(--dlv-border);
+  border-radius: var(--dlv-radius);
+  padding: 1.25rem;
+  box-shadow: var(--dlv-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dlv-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+}
+
+.dlv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.dlv-btn-primary {
+  background: var(--dlv-primary);
+  border: none;
+  color: #fff;
+  border-radius: 10px;
+  padding: 0.55rem 1.1rem;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.dlv-btn-primary:hover {
+  opacity: 0.92;
+}

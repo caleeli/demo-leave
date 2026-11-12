@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "processmaker": {
+      "type": "http",
+      "url": "http://pm4.local:8089/mcp/processes"
+    }
+  }
+}

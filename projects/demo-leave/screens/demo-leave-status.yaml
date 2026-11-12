@@ -1,0 +1,37 @@
+title: demo-leave-status
+description: Final leave request status summary
+type: DISPLAY
+config:
+  - name: Page 1
+    order: 1
+    items:
+      - uuid: 6ba7b812-9dad-11d1-80b4-00c04fd430c8
+        component: VueComponentRenderTemplate
+        editor-component: VueComponentEditor
+        editor-control: VueComponentEditor
+        label: Status summary
+        inspector: []
+        config:
+          icon: fa-palette
+          interactive: false
+          componentName: LeaveStatusSummary
+          contentVue: "<LeaveStatusSummary v-model=\"data\" />"
+          handlerVue: |
+            return {
+              created() {
+                if (!this.data) {
+                  return;
+                }
+                if (this.data.requestHistory === undefined) {
+                  this.$set(this.data, 'requestHistory', []);
+                }
+              },
+            };
+          components:
+            - name: LeaveStatusSummary
+              key: "@/projects/demoLeave/statusSummary/LeaveStatusSummary.vue"
+          renderVarHtml: null
+          ignoreMustache: true
+computed: []
+watchers: []
+custom_css: null

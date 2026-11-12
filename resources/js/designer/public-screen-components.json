@@ -1,0 +1,45 @@
+[
+  {
+    "name": "LeaveEmployeeDashboard",
+    "key": "@/projects/demoLeave/employeeDashboard/LeaveEmployeeDashboard.vue",
+    "components": [
+      { "name": "LeaveBalanceCards", "key": "@/projects/demoLeave/components/LeaveBalanceCards.vue" },
+      { "name": "LeaveHolidayCalendar", "key": "@/projects/demoLeave/components/LeaveHolidayCalendar.vue" },
+      { "name": "LeaveHistoryTable", "key": "@/projects/demoLeave/components/LeaveHistoryTable.vue" }
+    ]
+  },
+  {
+    "name": "LeaveBalanceCards",
+    "key": "@/projects/demoLeave/components/LeaveBalanceCards.vue"
+  },
+  {
+    "name": "LeaveHolidayCalendar",
+    "key": "@/projects/demoLeave/components/LeaveHolidayCalendar.vue"
+  },
+  {
+    "name": "LeaveHistoryTable",
+    "key": "@/projects/demoLeave/components/LeaveHistoryTable.vue"
+  },
+  {
+    "name": "LeaveRequestForm",
+    "key": "@/projects/demoLeave/requestForm/LeaveRequestForm.vue"
+  },
+  {
+    "name": "LeaveManagerReview",
+    "key": "@/projects/demoLeave/managerReview/LeaveManagerReview.vue"
+  },
+  {
+    "name": "LeaveStatusSummary",
+    "key": "@/projects/demoLeave/statusSummary/LeaveStatusSummary.vue",
+    "components": [
+      { "name": "LeaveHistoryTable", "key": "@/projects/demoLeave/components/LeaveHistoryTable.vue" }
+    ]
+  },
+  {
+    "name": "LeaveValidationNotice",
+    "key": "@/projects/demoLeave/validationNotice/LeaveValidationNotice.vue",
+    "components": [
+      { "name": "LeaveHolidayCalendar", "key": "@/projects/demoLeave/components/LeaveHolidayCalendar.vue" }
+    ]
+  }
+]

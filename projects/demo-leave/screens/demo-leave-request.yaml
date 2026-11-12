@@ -1,0 +1,40 @@
+title: demo-leave-request
+description: Submit a new leave request with validation hints
+type: FORM
+config:
+  - name: Page 1
+    order: 1
+    items:
+      - uuid: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+        component: VueComponentRenderTemplate
+        editor-component: VueComponentEditor
+        editor-control: VueComponentEditor
+        label: Leave request
+        inspector: []
+        config:
+          icon: fa-palette
+          interactive: true
+          componentName: LeaveRequestForm
+          contentVue: "<LeaveRequestForm v-model=\"data\" :submit=\"submit\" />"
+          handlerVue: |
+            return {
+              created() {
+                if (!this.data) {
+                  return;
+                }
+                ['leaveType', 'startDate', 'endDate', 'reason', 'halfDay', 'validationErrors'].forEach((key) => {
+                  if (this.data[key] === undefined) {
+                    const fallback = key === 'leaveType' ? 'annual' : (key === 'validationErrors' ? [] : (key === 'halfDay' ? false : ''));
+                    this.$set(this.data, key, fallback);
+                  }
+                });
+              },
+            };
+          components:
+            - name: LeaveRequestForm
+              key: "@/projects/demoLeave/requestForm/LeaveRequestForm.vue"
+          renderVarHtml: null
+          ignoreMustache: true
+computed: []
+watchers: []
+custom_css: null

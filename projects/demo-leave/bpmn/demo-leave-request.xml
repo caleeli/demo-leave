@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:pm="http://processmaker.com/BPMN/2.0/Schema.xsd" id="Definitions_DemoLeave" targetNamespace="http://bpmn.io/schema/bpmn" exporter="ProcessMaker Modeler" exporterVersion="1.0">
+  <bpmn:process id="Process_DemoLeaveRequest" name="demo-leave-request" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_Employee" name="Employee">
+        <bpmn:flowNodeRef>node_start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>node_init</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>node_dashboard</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>node_request</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>node_validate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>gw_validation</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>node_validation_notice</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>node_status</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>node_end</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Manager" name="Manager">
+        <bpmn:flowNodeRef>node_manager</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>node_apply</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>node_notify</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="node_start" name="Start leave request">
+      <bpmn:outgoing>flow_start_init</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="node_init" name="Initialize workspace" pm:scriptRef="${script:demo-leave-initialize-workspace}">
+      <bpmn:incoming>flow_start_init</bpmn:incoming>
+      <bpmn:outgoing>flow_init_dashboard</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:task id="node_dashboard" name="Employee dashboard" pm:screenRef="${screen:demo-leave-employee-dashboard}" pm:assignment="requester" pm:dueIn="72" pm:allowReassignment="false" pm:assignmentLock="false" pm:allowInterstitial="true">
+      <bpmn:incoming>flow_init_dashboard</bpmn:incoming>
+      <bpmn:incoming>flow_notice_request</bpmn:incoming>
+      <bpmn:outgoing>flow_dashboard_request</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="node_request" name="Submit leave request" pm:screenRef="${screen:demo-leave-request}" pm:assignment="requester" pm:dueIn="72" pm:allowReassignment="false" pm:assignmentLock="false" pm:allowInterstitial="false">
+      <bpmn:incoming>flow_dashboard_request</bpmn:incoming>
+      <bpmn:outgoing>flow_request_validate</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:scriptTask id="node_validate" name="Validate request" pm:scriptRef="${script:demo-leave-validate-request}">
+      <bpmn:incoming>flow_request_validate</bpmn:incoming>
+      <bpmn:outgoing>flow_validate_gateway</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="gw_validation" name="Valid request?" default="flow_validation_fail">
+      <bpmn:incoming>flow_validate_gateway</bpmn:incoming>
+      <bpmn:outgoing>flow_validation_ok</bpmn:outgoing>
+      <bpmn:outgoing>flow_validation_fail</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="node_validation_notice" name="Validation feedback" pm:screenRef="${screen:demo-leave-validation-notice}" pm:assignment="requester" pm:dueIn="24" pm:allowReassignment="false" pm:assignmentLock="false" pm:allowInterstitial="false">
+      <bpmn:incoming>flow_validation_fail</bpmn:incoming>
+      <bpmn:outgoing>flow_notice_request</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="node_manager" name="Manager approval" pm:screenRef="${screen:demo-leave-manager-review}" pm:assignment="process_manager" pm:dueIn="48" pm:allowReassignment="true" pm:assignmentLock="false" pm:allowInterstitial="false">
+      <bpmn:incoming>flow_validation_ok</bpmn:incoming>
+      <bpmn:outgoing>flow_manager_apply</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:scriptTask id="node_apply" name="Apply decision" pm:scriptRef="${script:demo-leave-apply-decision}">
+      <bpmn:incoming>flow_manager_apply</bpmn:incoming>
+      <bpmn:outgoing>flow_apply_notify</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="node_notify" name="Notify employee" implementation="connector-send-email/processmaker-communication-email-send" pm:config="{&#34;emailServer&#34;:&#34;&#34;,&#34;type&#34;:&#34;text&#34;,&#34;subject&#34;:&#34;{{notificationSubject}}&#34;,&#34;textBody&#34;:&#34;{{notificationBody}}&#34;,&#34;screenRef&#34;:null,&#34;toRecipients&#34;:[{&#34;type&#34;:&#34;email&#34;,&#34;value&#34;:&#34;{{notifyEmail}}&#34;}],&#34;ccRecipients&#34;:[],&#34;bccRecipients&#34;:[],&#34;attachments&#34;:[]}">
+      <bpmn:incoming>flow_apply_notify</bpmn:incoming>
+      <bpmn:outgoing>flow_notify_status</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:task id="node_status" name="Request status" pm:screenRef="${screen:demo-leave-status}" pm:assignment="requester" pm:dueIn="24" pm:allowReassignment="false" pm:assignmentLock="false" pm:allowInterstitial="false">
+      <bpmn:incoming>flow_notify_status</bpmn:incoming>
+      <bpmn:outgoing>flow_status_end</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="node_end" name="Completed">
+      <bpmn:incoming>flow_status_end</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="flow_start_init" sourceRef="node_start" targetRef="node_init" />
+    <bpmn:sequenceFlow id="flow_init_dashboard" sourceRef="node_init" targetRef="node_dashboard" />
+    <bpmn:sequenceFlow id="flow_dashboard_request" sourceRef="node_dashboard" targetRef="node_request" />
+    <bpmn:sequenceFlow id="flow_request_validate" sourceRef="node_request" targetRef="node_validate" />
+    <bpmn:sequenceFlow id="flow_validate_gateway" sourceRef="node_validate" targetRef="gw_validation" />
+    <bpmn:sequenceFlow id="flow_validation_ok" name="Passed" sourceRef="gw_validation" targetRef="node_manager">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">validationPassed === true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_validation_fail" name="Needs correction" sourceRef="gw_validation" targetRef="node_validation_notice" />
+    <bpmn:sequenceFlow id="flow_notice_request" sourceRef="node_validation_notice" targetRef="node_dashboard" />
+    <bpmn:sequenceFlow id="flow_manager_apply" sourceRef="node_manager" targetRef="node_apply" />
+    <bpmn:sequenceFlow id="flow_apply_notify" sourceRef="node_apply" targetRef="node_notify" />
+    <bpmn:sequenceFlow id="flow_notify_status" sourceRef="node_notify" targetRef="node_status" />
+    <bpmn:sequenceFlow id="flow_status_end" sourceRef="node_status" targetRef="node_end" />
+  </bpmn:process>
+  <bpmn:collaboration id="collaboration_demo_leave">
+    <bpmn:participant id="Participant_DemoLeave" name="demo-leave-request" processRef="Process_DemoLeaveRequest" />
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_DemoLeave">
+    <bpmndi:BPMNPlane id="BPMNPlane_DemoLeave" bpmnElement="collaboration_demo_leave">
+      <bpmndi:BPMNShape id="Participant_DemoLeave_di" bpmnElement="Participant_DemoLeave" isHorizontal="true">
+        <dc:Bounds x="100" y="50" width="1220" height="530" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Employee_di" bpmnElement="Lane_Employee" isHorizontal="true">
+        <dc:Bounds x="130" y="80" width="1170" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Manager_di" bpmnElement="Lane_Manager" isHorizontal="true">
+        <dc:Bounds x="130" y="340" width="1170" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="node_start_di" bpmnElement="node_start">
+        <dc:Bounds x="172" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="node_init_di" bpmnElement="node_init">
+        <dc:Bounds x="250" y="160" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="node_dashboard_di" bpmnElement="node_dashboard">
+        <dc:Bounds x="410" y="160" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="node_request_di" bpmnElement="node_request">
+        <dc:Bounds x="570" y="160" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="node_validate_di" bpmnElement="node_validate">
+        <dc:Bounds x="730" y="160" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gw_validation_di" bpmnElement="gw_validation" isMarkerVisible="true">
+        <dc:Bounds x="895" y="175" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="node_validation_notice_di" bpmnElement="node_validation_notice">
+        <dc:Bounds x="1010" y="60" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="node_manager_di" bpmnElement="node_manager">
+        <dc:Bounds x="1010" y="400" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="node_apply_di" bpmnElement="node_apply">
+        <dc:Bounds x="730" y="400" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="node_notify_di" bpmnElement="node_notify">
+        <dc:Bounds x="570" y="400" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="node_status_di" bpmnElement="node_status">
+        <dc:Bounds x="410" y="400" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="node_end_di" bpmnElement="node_end">
+        <dc:Bounds x="292" y="422" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flow_start_init_di" bpmnElement="flow_start_init">
+        <di:waypoint x="208" y="200" />
+        <di:waypoint x="250" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_init_dashboard_di" bpmnElement="flow_init_dashboard">
+        <di:waypoint x="370" y="200" />
+        <di:waypoint x="410" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_dashboard_request_di" bpmnElement="flow_dashboard_request">
+        <di:waypoint x="530" y="200" />
+        <di:waypoint x="570" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_request_validate_di" bpmnElement="flow_request_validate">
+        <di:waypoint x="690" y="200" />
+        <di:waypoint x="730" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_validate_gateway_di" bpmnElement="flow_validate_gateway">
+        <di:waypoint x="850" y="200" />
+        <di:waypoint x="895" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_validation_ok_di" bpmnElement="flow_validation_ok">
+        <di:waypoint x="920" y="225" />
+        <di:waypoint x="920" y="440" />
+        <di:waypoint x="1010" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_validation_fail_di" bpmnElement="flow_validation_fail">
+        <di:waypoint x="945" y="175" />
+        <di:waypoint x="1075" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_notice_request_di" bpmnElement="flow_notice_request">
+        <di:waypoint x="1075" y="140" />
+        <di:waypoint x="470" y="140" />
+        <di:waypoint x="470" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_manager_apply_di" bpmnElement="flow_manager_apply">
+        <di:waypoint x="1010" y="440" />
+        <di:waypoint x="850" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_apply_notify_di" bpmnElement="flow_apply_notify">
+        <di:waypoint x="730" y="440" />
+        <di:waypoint x="690" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_notify_status_di" bpmnElement="flow_notify_status">
+        <di:waypoint x="570" y="440" />
+        <di:waypoint x="470" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_status_end_di" bpmnElement="flow_status_end">
+        <di:waypoint x="410" y="440" />
+        <di:waypoint x="310" y="440" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

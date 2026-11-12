@@ -1,0 +1,45 @@
+title: demo-leave-employee-dashboard
+description: Employee leave dashboard with balances, holidays, and history
+type: FORM
+config:
+  - name: Page 1
+    order: 1
+    items:
+      - uuid: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        component: VueComponentRenderTemplate
+        editor-component: VueComponentEditor
+        editor-control: VueComponentEditor
+        label: Employee dashboard
+        inspector: []
+        config:
+          icon: fa-palette
+          interactive: true
+          componentName: LeaveEmployeeDashboard
+          contentVue: "<LeaveEmployeeDashboard v-model=\"data\" :submit=\"submit\" />"
+          handlerVue: |
+            return {
+              created() {
+                if (!this.data) {
+                  return;
+                }
+                const defaults = {
+                  balances: { annual: 15, sick: 10, personal: 3 },
+                  holidayDates: [],
+                  requestHistory: [],
+                  requestStatus: 'draft',
+                };
+                Object.keys(defaults).forEach((key) => {
+                  if (this.data[key] === undefined) {
+                    this.$set(this.data, key, defaults[key]);
+                  }
+                });
+              },
+            };
+          components:
+            - name: LeaveEmployeeDashboard
+              key: "@/projects/demoLeave/employeeDashboard/LeaveEmployeeDashboard.vue"
+          renderVarHtml: null
+          ignoreMustache: true
+computed: []
+watchers: []
+custom_css: null
