@@ -1,4 +1,6 @@
 {
   "/css/package.css": "/css/package.css",
-  "/js/package.js": "/js/package.js"
+  "/js/package.js": "/js/package.js",
+  "/js/screen-builder-form-components.js": "/js/screen-builder-form-components.js",
+  "/js/screen-builder-display-components.js": "/js/screen-builder-display-components.js"
 }

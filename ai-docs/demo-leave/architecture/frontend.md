@@ -1,6 +1,8 @@
 # demo-leave frontend
 
-Vue 2 + BootstrapVue screen components registered in `resources/js/designer/public-screen-components.json`.
+Domain Vue inventory. **Catalog, build, publish, handlerVue rules:** [screen-builder.md](../../screen-builder.md).
+
+Vue 2 + BootstrapVue. Catalog: `resources/js/designer/public-screen-components.json`.
 
 ## Components
 
@@ -12,18 +14,15 @@ Vue 2 + BootstrapVue screen components registered in `resources/js/designer/publ
 | Validation | `LeaveValidationNotice` | `LeaveHolidayCalendar` |
 | Status | `LeaveStatusSummary` | `LeaveHistoryTable` |
 
-Shared visual tokens live in `resources/js/projects/demoLeave/shared/leaveTheme.css` (indigo gradient hero, soft cards, responsive grids).
+Shared visual tokens: `resources/js/projects/demoLeave/shared/leaveTheme.css` (indigo gradient hero, soft cards, responsive grids).
 
-## Screen Builder
+## Screens
 
-Each FORM/DISPLAY YAML uses a single `VueComponentRenderTemplate` with `handlerVue` guarding `this.data` before defaults are applied.
+See [AGENTS.md](../AGENTS.md) for the full `pm:screenRef` → YAML → Vue table.
 
 ## Build
 
 ```bash
-npm install
 npm run prod
 php artisan vendor:publish --tag=demo-leave --force
 ```
-
-When integrated with Screen Builder entrypoints, load `registerPublicScreenCatalog` from `resources/js/designer/public-screen-components.json`.

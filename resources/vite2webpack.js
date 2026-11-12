@@ -6,32 +6,29 @@ import path from 'path';
  */
 export default function convertToMixManifest(config) {
   return {
-    name: 'convert-to-mix-manifest', // required, will show up in warnings and errors
-    writeBundle(options, bundle) {
-      console.log(options);
-      // Specify the path to the generated manifest.json and desired mix-manifest.json
+    name: 'convert-to-mix-manifest',
+    writeBundle() {
+      const addManifestPath = config.addManifest
+        ? path.resolve(config.outDir, config.addManifest)
+        : null;
       const manifestPath = path.resolve(config.outDir, 'manifest.json');
       const mixManifestPath = path.resolve(config.outDir, 'mix-manifest.json');
+      const readPath = config.addManifest ? addManifestPath : manifestPath;
 
-      // Read the Vite manifest.json
-      fs.readFile(manifestPath, (err, data) => {
+      fs.readFile(readPath, (err, data) => {
         if (err) throw err;
-
         const manifest = JSON.parse(data);
         const mixManifest = {};
-
-        // Convert each entry in the Vite manifest into Mix manifest format
-        for (const [key, value] of Object.entries(manifest)) {
-          // Assuming the value.src and value.file structure, adjust as necessary
-          const newName = `/${value.file}`;
-          mixManifest[newName] = newName;
-        }
-
-        // Write the new mix-manifest.json
-        fs.writeFile(mixManifestPath, JSON.stringify(mixManifest, null, 2), (err) => {
-          if (err) throw err;
-          console.log('mix-manifest.json has been generated.');
+        Object.values(manifest).forEach((value) => {
+          mixManifest[`/${value.file}`] = `/${value.file}`;
         });
+
+        if (config.addManifest && fs.existsSync(mixManifestPath)) {
+          const existing = JSON.parse(fs.readFileSync(mixManifestPath, 'utf8'));
+          fs.writeFileSync(mixManifestPath, JSON.stringify({ ...existing, ...mixManifest }, null, 2));
+          return;
+        }
+        fs.writeFileSync(mixManifestPath, JSON.stringify(mixManifest, null, 2));
       });
     },
   };

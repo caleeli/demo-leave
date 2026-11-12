@@ -6,7 +6,7 @@ BPMN-driven leave management for employees and managers.
 
 - [database.md](./architecture/database.md) — request data keys (in-process balances; optional `dlv_*` tables later)
 - [workflow.md](./architecture/workflow.md) — BPMN path, screens, scripts, gateways
-- [frontend.md](./architecture/frontend.md) — Vue screens and Storybook
+- [frontend.md](./architecture/frontend.md) — Vue screens and Storybook ([screen-builder.md](../../screen-builder.md) for catalog/build)
 
 ## BPMN
 

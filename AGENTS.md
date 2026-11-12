@@ -227,6 +227,7 @@ Test script tasks could have some special behavior, it usually expect to have a 
 ## Cross-domain architecture
 
 - [Best code practices](./ai-docs/best-code-practices.md): **SonarQube must pass** on changed code, cognitive complexity ≤ 15, classes ≤ 20 methods, and related quality expectations.
+- [Screen Builder package bundles](./ai-docs/screen-builder.md): catalog, Vite IIFE builds, publish (no `package-plg` on server).
 - [Custom Vue Components](./ai-docs/custom-vue-components.md): administration, Screen Builder runtime resolution, browser caching, security, and Screen Import/Export dependencies.
 - [Projects hexagonal organization](./ai-docs/hexagonal.md)
 - [Projects assets organization](./projects/AGENTS.md)
